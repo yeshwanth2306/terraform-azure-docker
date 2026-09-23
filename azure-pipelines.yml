@@ -4,8 +4,19 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+
 - checkout: self
 
+- task: AzureCLI@2
+  displayName: 'Test Azure Connection'
+  inputs:
+    azureSubscription: 'terraform-docker-service-connection'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      echo "Successfully authenticated to Azure"
+      az account show --query "{Subscription:name, SubscriptionId:id}" --output table
+
 - script: |
-    echo "Pipeline started successfully"
-  displayName: 'Test Pipeline'
+    terraform version
+  displayName: 'Check Terraform'
