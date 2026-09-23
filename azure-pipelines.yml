@@ -52,3 +52,13 @@ steps:
     scriptLocation: 'inlineScript'
     inlineScript: |
       terraform validate
+
+- task: AzureCLI@2
+  displayName: 'Terraform Plan'
+  inputs:
+    azureSubscription: 'terraform-docker-service-connection'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      export TF_VAR_ssh_public_key="$(TF_VAR_ssh_public_key)"
+      terraform plan -out=tfplan
