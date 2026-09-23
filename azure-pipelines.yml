@@ -43,3 +43,12 @@ steps:
     scriptLocation: 'inlineScript'
     inlineScript: |
       terraform init
+
+- task: AzureCLI@2
+  displayName: 'Terraform Validate'
+  inputs:
+    azureSubscription: 'terraform-docker-service-connection'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      terraform validate
