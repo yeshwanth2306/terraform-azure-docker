@@ -17,6 +17,15 @@ steps:
       echo "Successfully authenticated to Azure"
       az account show --query "{Subscription:name, SubscriptionId:id}" --output table
 
+- task: AzureCLI@2
+  displayName: 'Terraform Init'
+  inputs:
+    azureSubscription: 'terraform-docker-service-connection'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      terraform init
+
 - script: |
     sudo apt-get update
     sudo apt-get install -y gnupg software-properties-common curl
