@@ -62,3 +62,13 @@ steps:
     inlineScript: |
       export TF_VAR_ssh_public_key="$(TF_VAR_ssh_public_key)"
       terraform plan -out=tfplan
+
+- task: AzureCLI@2
+  displayName: 'Terraform Apply'
+  inputs:
+    azureSubscription: 'terraform-docker-service-connection'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      export TF_VAR_ssh_public_key="$(TF_VAR_ssh_public_key)"
+      terraform apply -auto-approve tfplan
